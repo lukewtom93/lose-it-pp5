@@ -83,7 +83,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
-    'corsheaders'
+    'corsheaders',
 
     'profiles',
 ]
@@ -99,7 +99,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    os.environ('CLIENT_ORIGIN')
+    os.environ.get('CLIENT_ORIGIN')
 ]
 
 CORS_ALLOWED_CREDENTIALS = True
