@@ -5,6 +5,8 @@ env.py
 __pycache__/
 *.py[cod]
 node_modules/
+**node_modules/
+.venv/
 
 # ignoring migrations
 **/migrations/**
