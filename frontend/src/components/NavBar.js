@@ -8,6 +8,7 @@ import {
 } from "../contexts/CurrentUserContext";
 import axios from "axios";
 import { removeTokenTimestamp } from "../utils/utils";
+import Avatar from "./Avatar";
 
 const NavBar = () => {
   const currentUser = useCurrentUser();
@@ -36,7 +37,7 @@ const NavBar = () => {
         className={styles.NavLink}
         to={`/profiles/${currentUser?.profile_id}`}
       >
-      <img src={currentUser?.profile_image}/>
+      <Avatar src={currentUser?.profile_image} text='Profile' height={40}/>
       </NavLink>
     
     </>
