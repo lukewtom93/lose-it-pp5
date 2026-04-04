@@ -2,6 +2,7 @@ import React from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import styles from "../styles/NavBar.module.css";
 import { NavLink } from "react-router-dom";
+import logo from "../assets/logo.png"
 import {
   useCurrentUser,
   useSetCurrentUser,
@@ -69,7 +70,7 @@ const NavBar = () => {
       <Container>
         <NavLink to="/">
           <Navbar.Brand>
-           Lose it
+           <img src={logo} alt="logo" height="45" />
           </Navbar.Brand>
         </NavLink>
         <Navbar.Toggle ref={ref} onClick={() => setExpanded(!expanded)}  aria-controls="basic-navbar-nav" />
