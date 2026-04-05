@@ -15,7 +15,7 @@ class WeightList(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
 
-class CurrentWeightList(generics.ListAPIView):
+class CurrentWeightList(generics.ListCreateAPIView):
     serializer_class = BodyWeightTrackerSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = BodyWeightTracker.objects.all()
