@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from body_weight.models import BodyWeight
+from body_weight.models import BodyWeight, BodyWeightTracker
 
 
 class BodyWeightSerializer(serializers.ModelSerializer):
@@ -16,5 +16,7 @@ class BodyWeightSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class WeightTrackerSerializer(serializers.ModelSerializer):
-    
+class BodyWeightTrackerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BodyWeightTracker
+        feilds = '--all--'

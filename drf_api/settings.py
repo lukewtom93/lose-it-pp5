@@ -95,6 +95,7 @@ INSTALLED_APPS = [
 
     'profiles',
     'body_weight',
+
 ]
 SITE_ID = 1
 MIDDLEWARE = [
