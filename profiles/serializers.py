@@ -5,6 +5,10 @@ from .models import Profile
 class ProfileSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
+    starting_weight = serializers.ReadOnlyField(
+        source='owner.profile.starting_weight')
+    goal_weight = serializers.ReadOnlyField(
+        source='owner.profile.goal_weight')
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -14,5 +18,5 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = [
             'id', 'owner', 'created_at', 'updated_at', 'name',
-            'image', 'is_owner'
+            'image', 'is_owner', 'starting_weight', 'goal_weight',
         ]
