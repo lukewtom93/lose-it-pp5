@@ -26,4 +26,21 @@ class BodyWeight(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f'{self.owner}, {self.starting_weight}, {self.goal_weight}'
+        return (
+            f'{self.owner}: Starting weight - '
+            f'{self.starting_weight}{self.weight_unit} '
+            f'Goal weight - {self.goal_weight}{self.weight_unit}'
+        )
+
+
+class BodyWeightTracker(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    current_weight = models.DecimalField(max_digits=5, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return (
+            f"{self.owner}'s Current weight: {self.current_weight}"
+            f"{self.weight_unit} date:{self.created_at}"
+        )
