@@ -19,4 +19,4 @@ class BodyWeightSerializer(serializers.ModelSerializer):
 class BodyWeightTrackerSerializer(serializers.ModelSerializer):
     class Meta:
         model = BodyWeightTracker
-        feilds = '--all--'
+        fields = '__all__'
