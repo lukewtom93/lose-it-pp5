@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Card, Dropdown, Form } from "react-bootstrap";
 import { axiosReq } from "../../api/axiosDefaults";
-import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
+
 
 
 function BodyWeight() {
-  const setCurrentUser = useSetCurrentUser();
+
   const [bodyWeightData, setBodyWeightData] = useState({
     starting_weight: "",
     goal_weight: "",
@@ -25,10 +25,10 @@ function BodyWeight() {
         "/body_weight/",
         bodyWeightData,
       );
-      setCurrentUser(data.BodyWeight);
+      setBodyWeightData(data);
       console.log(data);
     } catch (error) {
-      console.log(error);
+      console.log(error.respose || error);
     }
   };
 
