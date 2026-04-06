@@ -11,7 +11,7 @@ class Profile(models.Model):
     name = models.CharField(max_length=255, blank=True)
     image = CloudinaryField(
         'image',
-        default='default_profile'
+        default='default_profile_crbj0v.jpg'
     )
 
     class Meta:
