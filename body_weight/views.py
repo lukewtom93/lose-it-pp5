@@ -6,10 +6,8 @@ from .serializer import BodyWeightSerializer, BodyWeightTrackerSerializer
 
 class WeightList(generics.ListCreateAPIView):
     serializer_class = BodyWeightSerializer
+    queryset = BodyWeight.objects.all()
     permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        return BodyWeight.objects.filter(owner=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
