@@ -1,13 +1,20 @@
 from rest_framework import permissions
+from drf_api.permissions import IsOwnerOrReadOnly
 from rest_framework import generics
 from .models import BodyWeight, BodyWeightTracker
 from .serializer import BodyWeightSerializer, BodyWeightTrackerSerializer
 
 
-class WeightList(generics.ListCreateAPIView):
+class WeightList(generics.ListAPIView):
     serializer_class = BodyWeightSerializer
     queryset = BodyWeight.objects.all()
     permission_classes = [permissions.IsAuthenticated]
+
+
+class WeightListDetail(generics.RetrieveUpdateAPIView):
+    serializer_class = BodyWeightSerializer
+    queryset = BodyWeight.objects.all()
+    permission_classes = [IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
