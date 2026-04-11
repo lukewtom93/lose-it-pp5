@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Card, Dropdown, Form } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Card, Container, Dropdown, Form, Row, Col } from "react-bootstrap";
 import { axiosReq } from "../../api/axiosDefaults";
 
-
-
 function BodyWeight() {
-
   const [bodyWeightData, setBodyWeightData] = useState({
     starting_weight: "",
     goal_weight: "",
@@ -21,10 +18,7 @@ function BodyWeight() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axiosReq.post(
-        "/body_weight/",
-        bodyWeightData,
-      );
+      const { data } = await axiosReq.post("/body_weight/", bodyWeightData);
       setBodyWeightData(data);
       console.log(data);
     } catch (error) {
@@ -54,70 +48,72 @@ function BodyWeight() {
   }, []);
 
   return (
-    <Card>
-      <Card.Body>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="starting_weight">
-            <Form.Label className="d-none">Starting Weight</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Starting Weight"
-              name="starting_weight"
-              value={starting_weight}
-              onChange={handleChange}
-            />
-          </Form.Group>
-          <Form.Group controlId="goal_weight">
-            <Form.Label className="d-none">Goal Weight</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Goal Weight"
-              name="goal_weight"
-              value={goal_weight}
-              onChange={handleChange}
-            />
-          </Form.Group>
-          <button type="submit">submit</button>
-        </Form>
-        <Dropdown>
-          <Dropdown.Toggle>{unit}</Dropdown.Toggle>
-          <Dropdown.Menu>
-            {unitChoices.map((choice) => (
-              <Dropdown.Item
-                key={choice.value}
-                onClick={() => {
-                  setUnit(choice.value);
-                  setBodyWeightData({
-                    ...bodyWeightData,
-                    weight_unit: choice.value,
-                  });
-                }}
-              >
-                {choice.label}
-              </Dropdown.Item>
-            ))}
-          </Dropdown.Menu>
-        </Dropdown>
-
-        <div className="input-group mb-3">
-          <div className="input-group-prepend"></div>
-          <input
-            type="text"
-            className="form-control"
-            aria-label="Text input with dropdown button"
-          />
-        </div>
-        <div>
-          <p>
-            Starting: {bodyWeightData?.starting_weight}{" "}
-            {bodyWeightData?.weight_unit}
-          </p>
-          <p>
-            Goal: {bodyWeightData?.goal_weight} {bodyWeightData?.weight_unit}
-          </p>
-        </div>
-      </Card.Body>
-    </Card>
+    <Container className="mt-5">
+      <Row className="justify-content-center">
+        <Col md={6}>
+          <Card>
+            <Card.Body className="col-sm">
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="col-sm" controlId="starting_weight">
+                  <Form.Label className="">Starting Weight</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Starting Weight"
+                    name="starting_weight"
+                    value={starting_weight}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+                <Form.Group controlId="goal_weight" className="col-sm">
+                  <Form.Label className="">Goal Weight</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Goal Weight"
+                    name="goal_weight"
+                    value={goal_weight}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+                <button type="submit" className="col-sm">
+                  submit
+                </button>
+              </Form>
+              <div className="d-flex justify-content-between align-items-center mt-3">
+                <Dropdown className="col-sm">
+                  <Dropdown.Toggle variant="outline-secondary">{unit}</Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {unitChoices.map((choice) => (
+                      <Dropdown.Item
+                        key={choice.value}
+                        onClick={() => {
+                          setUnit(choice.value);
+                          setBodyWeightData({
+                            ...bodyWeightData,
+                            weight_unit: choice.value,
+                          });
+                        }}
+                      >
+                        {choice.label}
+                      </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
+              <div>
+                <p>
+                  Starting: {bodyWeightData?.starting_weight}{" "}
+                  {bodyWeightData?.weight_unit}
+                </p>
+                <p>
+                  Goal: {bodyWeightData?.goal_weight}{" "}
+                  {bodyWeightData?.weight_unit}
+                </p>
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
