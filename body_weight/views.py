@@ -5,22 +5,16 @@ from .models import BodyWeight, BodyWeightTracker
 from .serializer import BodyWeightSerializer, BodyWeightTrackerSerializer
 
 
-class WeightList(generics.ListAPIView):
+class WeightList(generics.ListCreateAPIView):
     serializer_class = BodyWeightSerializer
     queryset = BodyWeight.objects.all()
     permission_classes = [permissions.IsAuthenticated]
 
+    def get_queryset(self):
+        return self.queryset.filter(
+            owner=self.request.user
+        )
 
-class WeightListDetail(generics.RetrieveUpdateAPIView):
-    serializer_class = BodyWeightSerializer
-    queryset = BodyWeight.objects.all()
-    permission_classes = [IsOwnerOrReadOnly]
-
-    # def get_queryset(self):
-    #     return self.queryset.filter(
-    #         owner=self.request.user
-    #     )
-    
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
