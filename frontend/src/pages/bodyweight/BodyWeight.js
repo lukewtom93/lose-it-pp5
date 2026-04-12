@@ -50,56 +50,68 @@ function BodyWeight() {
   return (
     <Container className="mt-5">
       <Row className="justify-content-center">
-        <Col md={6}>
+        <Col md={6} >
           <Card>
-            <Card.Body className="col-sm">
+            <Card.Body>
               <Form onSubmit={handleSubmit}>
-                <Form.Group className="col-sm" controlId="starting_weight">
-                  <Form.Label className="">Starting Weight</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Starting Weight"
-                    name="starting_weight"
-                    value={starting_weight}
-                    onChange={handleChange}
-                  />
+                <Form.Group controlId="starting_weight">
+                  <Form.Label className="d-none">Starting Weight</Form.Label>
+
+                  <div className="input-group">
+                    <Form.Control
+                      type="text"
+                      placeholder="Starting Weight"
+                      name="starting_weight"
+                      value={starting_weight}
+                      onChange={handleChange}
+                    />
+
+                    <Dropdown>
+                      <Dropdown.Toggle variant="outline-secondary">
+                        {unit}
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu>
+                        {unitChoices.map((choice) => (
+                          <Dropdown.Item
+                            key={choice.value}
+                            onClick={() => {
+                              setUnit(choice.value);
+                              setBodyWeightData({
+                                ...bodyWeightData,
+                                weight_unit: choice.value,
+                              });
+                            }}
+                          >
+                            {choice.label}
+                          </Dropdown.Item>
+                        ))}
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </div>
                 </Form.Group>
-                <Form.Group controlId="goal_weight" className="col-sm">
-                  <Form.Label className="">Goal Weight</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Goal Weight"
-                    name="goal_weight"
-                    value={goal_weight}
-                    onChange={handleChange}
-                  />
+
+                <Form.Group controlId="goal_weight">
+                  <Form.Label className="d-none">Goal Weight</Form.Label>
+
+                  <div className="input-group">
+                    <Form.Control
+                      type="text"
+                      placeholder="Goal Weight"
+                      name="goal_weight"
+                      value={goal_weight}
+                      onChange={handleChange}
+                    />
+
+                    <div className="input-group-text">{unit}</div>
+                  </div>
                 </Form.Group>
-                <button type="submit" className="col-sm">
-                  submit
+                <button type="submit" className="mt-3 mb-3">
+                  save
                 </button>
               </Form>
-              <div className="d-flex justify-content-between align-items-center mt-3">
-                <Dropdown className="col-sm">
-                  <Dropdown.Toggle variant="outline-secondary">{unit}</Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    {unitChoices.map((choice) => (
-                      <Dropdown.Item
-                        key={choice.value}
-                        onClick={() => {
-                          setUnit(choice.value);
-                          setBodyWeightData({
-                            ...bodyWeightData,
-                            weight_unit: choice.value,
-                          });
-                        }}
-                      >
-                        {choice.label}
-                      </Dropdown.Item>
-                    ))}
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-              <div>
+
+              <div className="col">
                 <p>
                   Starting: {bodyWeightData?.starting_weight}{" "}
                   {bodyWeightData?.weight_unit}
