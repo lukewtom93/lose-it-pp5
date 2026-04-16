@@ -33,21 +33,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #         else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
 #     )]
 # }
-REST_FRAMEWORK = {
-    # changed default from rest_framework.authentication.SessionAuthentication
-    'DEFAULT_AUTHENTICATION_CLASSES': [(
-        'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
-        # if 'DEV' in os.environ
-        # else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
-    )],
-}
-
 # REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': [
-#         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
-#         'rest_framework.authentication.SessionAuthentication',
-#     ],
+#     # changed default from rest_framework.authentication.SessionAuthentication
+#     'DEFAULT_AUTHENTICATION_CLASSES': [(
+#         'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+#         # if 'DEV' in os.environ
+#         # else 'dj_rest_auth.jwt_auth.JWTCookieAuthentication'
+#     )],
 # }
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+
+    ],
+}
 
 if 'DEV' not in os.environ:
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
@@ -55,10 +55,10 @@ if 'DEV' not in os.environ:
     ]
 
 REST_USE_JWT = True
-JWT_AUTH_SECURE = True
 JWT_AUTH_COOKIE = 'my-app-auth'
 JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
-JWT_AUTH_SAMESITE = 'None'
+JWT_AUTH_SAMESITE = 'Lax'  #'none'
+JWT_AUTH_SECURE = False  #True
 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'drf_api.serializers.CurrentUserSerializer'
@@ -103,6 +103,7 @@ INSTALLED_APPS = [
     'profiles',
     'body_weight',
 
+
 ]
 SITE_ID = 1
 MIDDLEWARE = [
@@ -120,7 +121,7 @@ CORS_ALLOWED_ORIGINS = [
     os.environ.get('CLIENT_ORIGIN')
 ]
 
-CORS_ALLOWED_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True    #changed from allowed
 
 ROOT_URLCONF = 'drf_api.urls'
 

@@ -7,6 +7,7 @@ import SignUpForm from "./pages/auth/SignUpForm";
 import SignInForm from "./pages/auth/SignInForm";
 import BodyWeight from "./pages/bodyweight/BodyWeight";
 import Profile from "./pages/profile/Profile";
+import CurrentBodyWeight from "./pages/bodyweight/CurrentBodyWeight";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route exact path="/signup" render={() => <SignUpForm />} />
           <Route exact path="/profiles/:id" render={() => <Profile />} />
           <Route exact path="/bodyweight" render={() => <BodyWeight />} />
+          <Route exact path="/currentbodyweight" render={() => <CurrentBodyWeight />} />
           <Route render={() => <p>Page not found!</p>} />
         </Switch>
       </Container>

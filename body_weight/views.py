@@ -21,13 +21,13 @@ class WeightList(generics.ListCreateAPIView):
 
 class CurrentWeightList(generics.ListCreateAPIView):
     serializer_class = BodyWeightTrackerSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
     queryset = BodyWeightTracker.objects.all()
 
     def get_queryset(self):
         return BodyWeightTracker.objects.filter(
             body_weight__owner=self.request.user
-        )
+        ).order_by('created_at')
 
     def perform_create(self, serializer):
         body_weight = BodyWeight.objects.get(owner=self.request.user)
