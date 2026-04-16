@@ -6,6 +6,7 @@ import "./api/axiosDefaults";
 import SignUpForm from "./pages/auth/SignUpForm";
 import SignInForm from "./pages/auth/SignInForm";
 import BodyWeight from "./pages/bodyweight/BodyWeight";
+import Profile from "./pages/profile/Profile";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route exact path="/" render={() => <h1>Home page</h1>} />
           <Route exact path="/signin" render={() => <SignInForm />} />
           <Route exact path="/signup" render={() => <SignUpForm />} />
+          <Route exact path="/profiles/:id" render={() => <Profile />} />
           <Route exact path="/bodyweight" render={() => <BodyWeight />} />
           <Route render={() => <p>Page not found!</p>} />
         </Switch>
