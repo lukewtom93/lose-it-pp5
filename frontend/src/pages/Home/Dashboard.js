@@ -1,18 +1,25 @@
-import { useEffect, useState } from 'react'
-import { axiosReq } from '../../api/axiosDefaults'
-import { Row, Col, Card } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { axiosReq } from "../../api/axiosDefaults";
+import { Row, Col, Card, Container } from "react-bootstrap";
 import Chart from "../../components/Chart";
 
 function Dashboard() {
   const [currentWeightData, setCurrentWeightData] = useState([]);
+  const [bodyWeightData, setBodyWeightData] = useState({
+    starting_weight: "",
+    goal_weight: "",
+  });
 
   useEffect(() => {
     const handleMount = async () => {
       try {
-        const { data } = await axiosReq.get("/body_weight/current/");
+        const [Weight, Current] = await Promise.all([
+          axiosReq.get("/body_weight/"),
+          axiosReq.get("/body_weight/current/"),
+        ]);
 
-        setCurrentWeightData(data);
-        console.log(data);
+        setBodyWeightData(Weight.data[0]);
+        setCurrentWeightData(Current.data);
       } catch (error) {
         console.log(error);
       }
@@ -24,15 +31,32 @@ function Dashboard() {
     return <p>Loading...</p>;
   }
   return (
-    <Row>
-      <Col>
-        <Card>
-          <div>
-            <Chart data={currentWeightData} />
-          </div>
-        </Card>
-      </Col>
-    </Row>
+    <Container>
+      <Row>
+        <Col>
+          <Card>
+            <div>
+              <p>
+                Starting: {bodyWeightData?.starting_weight}{" "}
+                {bodyWeightData?.weight_unit}
+              </p>
+              <p>
+                Goal: {bodyWeightData?.goal_weight}{" "}
+                {bodyWeightData?.weight_unit}
+              </p>
+            </div>
+          </Card>
+        </Col>
+
+        <Col>
+          <Card className="p-3 h-100">
+            <div>
+              <Chart data={currentWeightData} />
+            </div>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
