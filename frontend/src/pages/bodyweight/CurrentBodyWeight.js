@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { axiosReq } from '../../api/axiosDefaults'
 import { Row, Col, Card } from 'react-bootstrap'
+import Chart from '../../components/Chart';
 
 
 function CurrentBodyWeight() {
@@ -25,6 +26,7 @@ function CurrentBodyWeight() {
     if (currentWeightData.length === 0){
         return <p>Loading...</p>;
     }
+
   return (
     <Row>
         <Col>
@@ -35,6 +37,9 @@ function CurrentBodyWeight() {
                             {entry.current_weight} - {entry.created_at}
                         </div>
                     ))}
+                </div>
+                <div>
+                    <Chart data={currentWeightData} />
                 </div>
             </Card>
         </Col>

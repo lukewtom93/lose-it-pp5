@@ -1,3 +1,4 @@
+from django.contrib.humanize.templatetags.humanize import naturaltime
 from rest_framework import serializers
 from body_weight.models import BodyWeight, BodyWeightTracker
 
@@ -25,6 +26,9 @@ class BodyWeightSerializer(serializers.ModelSerializer):
 
 
 class BodyWeightTrackerSerializer(serializers.ModelSerializer):
+    def get_created_at(self, obj):
+        return naturaltime(obj.created_at)
+
     class Meta:
         model = BodyWeightTracker
         fields = '__all__'

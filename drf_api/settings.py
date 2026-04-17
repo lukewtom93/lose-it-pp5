@@ -46,7 +46,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     ],
-    'DATETIME_FORMAT': '%d %b %Y',
+    # 'DATETIME_FORMAT': '%d %b %Y',
 
 }
 
