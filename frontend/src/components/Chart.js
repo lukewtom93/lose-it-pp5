@@ -1,7 +1,7 @@
-import { LineChart, Line, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 
 
-function Chart({data}) {
+const Chart = ({data}) => {
   const chartData = data.map((entry) => ({
 
     date: entry.created_at,
@@ -14,7 +14,10 @@ function Chart({data}) {
         <LineChart data={chartData}>
             <XAxis/>
             <YAxis/>
-        <Line dataKey="current_weight" />
+            <CartesianGrid strokeDasharray="5 5"/>
+            <Tooltip/>
+            <Legend/>
+        <Line type="monotone" dataKey="current_weight" />
         </LineChart>
     </ResponsiveContainer>
     </div>

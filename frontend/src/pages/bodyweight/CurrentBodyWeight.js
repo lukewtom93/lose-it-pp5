@@ -36,7 +36,7 @@ function CurrentBodyWeight() {
                         <div key={entry.id}>
                             {entry.current_weight} - {entry.created_at}
                         </div>
-                    ))}
+                    ))}     
                 </div>
                 <div>
                     <Chart data={currentWeightData} />

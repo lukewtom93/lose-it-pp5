@@ -8,6 +8,7 @@ import SignInForm from "./pages/auth/SignInForm";
 import BodyWeight from "./pages/bodyweight/BodyWeight";
 import Profile from "./pages/profile/Profile";
 import CurrentBodyWeight from "./pages/bodyweight/CurrentBodyWeight";
+import Dashboard from "./pages/Home/Dashboard";
 
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
       <NavBar />
       <Container className={styles.Main}>
         <Switch>
-          <Route exact path="/" render={() => <h1>Home page</h1>} />
+          <Route exact path="/" render={() => <Dashboard />} />
           <Route exact path="/signin" render={() => <SignInForm />} />
           <Route exact path="/signup" render={() => <SignUpForm />} />
           <Route exact path="/profiles/:id" render={() => <Profile />} />
