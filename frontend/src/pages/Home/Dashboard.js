@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { axiosReq } from "../../api/axiosDefaults";
 import { Row, Col, Card, Container } from "react-bootstrap";
 import Chart from "../../components/Chart";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
 function Dashboard() {
+  const currentUser = useCurrentUser();
   const [currentWeightData, setCurrentWeightData] = useState([]);
   const [bodyWeightData, setBodyWeightData] = useState({
     starting_weight: "",
@@ -11,6 +13,7 @@ function Dashboard() {
   });
 
   useEffect(() => {
+    if (!currentUser) return;
     const handleMount = async () => {
       try {
         const [Weight, Current] = await Promise.all([
@@ -25,7 +28,7 @@ function Dashboard() {
       }
     };
     handleMount();
-  }, []);
+  }, [currentUser]);
 
   if (currentWeightData.length === 0) {
     return <p>Loading...</p>;
@@ -34,7 +37,7 @@ function Dashboard() {
     <Container>
       <Row>
         <Col>
-          <Card>
+          <Card className="p-3 h-100">
             <div>
               <p>
                 Starting: {bodyWeightData?.starting_weight}{" "}
