@@ -1,3 +1,33 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
+
+class Food(models.Model):
+    """
+    Food nutrition
+    """
+    UNIT_CHOICES = [
+        ('g', 'Grams'),
+        ('ml', 'Millimeters'),
+        ('each', 'Each'),
+        ('slice', 'Slice')
+    ]
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="foods")
+    name = models.CharField(max_length=100)
+    serving_size = models.DecimalField(
+        max_digits=100, decimal_places=2)
+    serving_unit = models.CharField(
+        max_length=12, choices=UNIT_CHOICES, default='g')
+    calories = models.PositiveIntegerField()
+    protein = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    carbs = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    fat = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
