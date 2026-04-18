@@ -1,7 +1,10 @@
 from rest_framework import generics, permissions
+from django.utils import timezone
+from rest_framework.response import Response
 from .models import Food, MealEntry, DailyCalorieGoal
 from .serializers import (
     FoodSerializer, MealEntrySerializer, DailyCalorieGoalSerializer)
+from rest_framework.views import APIView
 
 
 class FoodList(generics.ListCreateAPIView):
@@ -62,3 +65,32 @@ class DailyCalorieGoalList(generics.ListCreateAPIView):
    
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class TodayCalorieGoalView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        today = timezone.localdate()
+        goal, _ = DailyCalorieGoal.objects.get_or_create(
+            owner=request.user,
+            date=today,
+            defaults={'calorie_goal': 2000}
+        )
+        serializer = DailyCalorieGoalSerializer(goal)
+        return Response(serializer.data)
+
+    def put(self, request):
+        today = timezone.localdate()
+        goal, _ = DailyCalorieGoal.objects.get_or_create(
+            owner=request.user,
+            date=today,
+            defaults={'calorie_goal': 2000}
+        )
+
+        serializer = DailyCalorieGoalSerializer(
+            goal, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(owner=request.user, date=today)
+        return Response(serializer.data)
+

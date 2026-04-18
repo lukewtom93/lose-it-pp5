@@ -7,4 +7,5 @@ urlpatterns = [
     path('meal-entry/', views.MealEntryList.as_view()),
     path('meal-entry/<int:pk>', views.MealEntryDetail.as_view()),
     path('daily-calorie-goal/', views.DailyCalorieGoalList.as_view()),
+    path('daily-calorie-goal/today', views.TodayCalorieGoalView.as_view()),
 ]
