@@ -103,6 +103,7 @@ INSTALLED_APPS = [
 
     'profiles',
     'body_weight',
+    'nutrition',
 
 
 ]

@@ -30,6 +30,7 @@ urlpatterns = [
     ),
     path('api/', include('profiles.urls')),
     path('api/', include('body_weight.urls')),
+    path('api/', include('nutrition.urls')),
 ]
 
 handler404 = TemplateView.as_view(template_name='index.html')
