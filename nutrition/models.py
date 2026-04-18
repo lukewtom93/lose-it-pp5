@@ -38,6 +38,9 @@ class Food(models.Model):
 
 
 class MealEntry(models.Model):
+    """
+    Meal entries
+    """
     MEAL_CHOICES = [
         ('breakfast', 'Breakfast'),
         ('lunch', 'Lunch'),
@@ -68,6 +71,26 @@ class MealEntry(models.Model):
 
     class Meta:
         ordering = ['-consumed_at']
-    
+
     def __str__(self):
         return f'{self.owner} - {self.food.name}'
+
+
+class DailyCalorieGoal(models.Model):
+    """
+    Daily calorie intake which will allow only one set value for calories
+    """
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='calorie_goals'
+    )
+    date = models.DateField()
+    calorie_goal = models.PositiveIntegerField(default=2000)
+
+    class Meta:
+        ordering = ['-date']
+        unique_together = ['owner', 'date']
+
+    def __str__(self):
+        return f'{self.owner} - {self.date} - {self.calorie_goal}'
