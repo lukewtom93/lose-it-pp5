@@ -15,9 +15,18 @@ class FoodList(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
 
+class FoodDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = FoodSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Food.objects.filter(owner=self.request.user)
+
+
 class MealEntryList(generics.ListCreateAPIView):
     """
-    Meal entry list which then can filter by date
+    Meal entry list which then can filter queryset by date
+    for easier access for frontend to display daily meals
     """
     serializer_class = MealEntrySerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -34,6 +43,14 @@ class MealEntryList(generics.ListCreateAPIView):
    
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class MealEntryDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = MealEntrySerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return MealEntry.objects.filter(owner=self.request.user)
 
 
 class DailyCalorieGoalList(generics.ListCreateAPIView):
