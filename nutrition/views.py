@@ -16,11 +16,21 @@ class FoodList(generics.ListCreateAPIView):
 
 
 class MealEntryList(generics.ListCreateAPIView):
+    """
+    Meal entry list which then can filter by date
+    """
     serializer_class = MealEntrySerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return MealEntry.objects.filter(owner=self.request.user)
+        queryset = MealEntry.objects.filter(owner=self.request.user)
+
+        date = self.request.query_params.get('date')
+   
+        if date:
+            queryset = queryset.filter(consumed_at__date=date)
+
+        return queryset
    
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
