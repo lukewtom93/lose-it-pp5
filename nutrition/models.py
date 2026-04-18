@@ -28,7 +28,7 @@ class Food(models.Model):
     carbs = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     fat = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['name']
@@ -39,7 +39,7 @@ class Food(models.Model):
 
 class MealEntry(models.Model):
     """
-    Meal entries
+    Meal entries with calculated calories
     """
     MEAL_CHOICES = [
         ('breakfast', 'Breakfast'),
@@ -67,13 +67,29 @@ class MealEntry(models.Model):
         default=1)
     consumed_at = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['-consumed_at']
 
     def __str__(self):
         return f'{self.owner} - {self.food.name}'
+    
+    @property
+    def total_calories(self):
+        return round(self.food.calories * self.quantity, 2)
+
+    @property
+    def total_protein(self):
+        return round(self.food.protein * self.quantity, 2)
+
+    @property
+    def total_carbs(self):
+        return round(self.food.carbs * self.quantity, 2)
+
+    @property
+    def total_fat(self):
+        return round(self.food.fat * self.quantity, 2)
 
 
 class DailyCalorieGoal(models.Model):
