@@ -3,10 +3,11 @@ import { axiosReq } from "../../api/axiosDefaults";
 import { Row, Col, Card, Container } from "react-bootstrap";
 import Chart from "../../components/Chart";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
+import styles from "../../styles/Dashboard.module.css"
 
 function Dashboard() {
   const currentUser = useCurrentUser();
-  const [calorieData, setCalorieData] = useState([]);
+  const [calorieData, setCalorieData] = useState(null);
   const [currentWeightData, setCurrentWeightData] = useState([]);
   const [bodyWeightData, setBodyWeightData] = useState({
     starting_weight: "",
@@ -38,10 +39,10 @@ function Dashboard() {
     return <p>Loading...</p>;
   }
   return (
-    <Container>
+    <Container className={styles.dashboard}>
       <Row>
         <Col>
-          <Card className="p-3 h-100">
+          <Card className={`p-3 h-100 ${styles.card}`}>
             <div>
               <p>
                 Starting: {bodyWeightData?.starting_weight}{" "}
@@ -56,7 +57,7 @@ function Dashboard() {
         </Col>
 
         <Col>
-          <Card className="p-3 h-100">
+          <Card className={`p-3 h-100 ${styles.card}`}>
             <div>
               <Chart data={currentWeightData} />
             </div>
@@ -66,11 +67,11 @@ function Dashboard() {
 
       <Row>
         <Col>
-          <Card className="p-3 h-100"></Card>
+          <Card className={`p-3 h-100 ${styles.card}`}>
             <div>
               <p>Daily Calories: {calorieData?.calorie_goal}</p>
             </div>
-          <Card/>
+          </Card>
         </Col>
       </Row>
     </Container>
