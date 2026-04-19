@@ -20,13 +20,13 @@ function Dashboard() {
         const [Weight, Current, Calorie] = await Promise.all([
           axiosReq.get("/body_weight/"),
           axiosReq.get("/body_weight/current/"),
-          axiosReq.get("/daily-calorie-goal/"),
+          axiosReq.get("/daily-calorie-goal/today"),
         ]);
 
         setBodyWeightData(Weight.data[0]);
         setCurrentWeightData(Current.data);
-        setCalorieData(Calorie.data[0]);
-        console.log(Calorie.data);
+        setCalorieData(Calorie.data);
+        console.log(Weight.data);
       } catch (error) {
         console.log(error);
       }

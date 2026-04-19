@@ -68,6 +68,9 @@ class DailyCalorieGoalList(generics.ListCreateAPIView):
 
 
 class TodayCalorieGoalView(APIView):
+    """
+    Automaticaly creates a Calorie goal, checking if one exits first
+    """
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
