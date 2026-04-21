@@ -1,22 +1,8 @@
-import React, { useEffect, useState } from 'react'
 import { Card, Col, Container, Row, Table } from "react-bootstrap";
-import { axiosReq } from '../../api/axiosDefaults'
 import useFoods from '../../hooks/useFoods';
 
 function AddFood() {
-    // const [foodData, setFoodData] = useState([])
 
-    // useEffect (() => {
-    //     const food = async () => {
-    //         try {
-    //             const {data} = await axiosReq.get('/food/')
-    //             setFoodData(data);
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     }
-    //     food()
-    // }, [])
     const { foods, loading, error } = useFoods();
     if (loading) return <p>Loading...</p>
     if (error) return <p>{error}</p>
