@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Col, Container, Row, Table } from "react-bootstrap";
 import { axiosReq } from '../../api/axiosDefaults'
+import useFoods from '../../hooks/useFoods';
 
 function AddFood() {
-    const [foodData, setFoodData] = useState([])
+    // const [foodData, setFoodData] = useState([])
 
-    useEffect (() => {
-        const food = async () => {
-            try {
-                const {data} = await axiosReq.get('/food/')
-                setFoodData(data);
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        food()
-    }, [])
+    // useEffect (() => {
+    //     const food = async () => {
+    //         try {
+    //             const {data} = await axiosReq.get('/food/')
+    //             setFoodData(data);
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     }
+    //     food()
+    // }, [])
+    const { foods, loading, error } = useFoods();
+    if (loading) return <p>Loading...</p>
+    if (error) return <p>{error}</p>
 
   return (
     <Container>
@@ -24,7 +28,7 @@ function AddFood() {
           <Card className="p-4">
             <h2>Your Foods</h2>
 
-            {foodData.length === 0 ? (
+            {foods.length === 0 ? (
               <p>No foods created yet.</p>
             ) : (
               <Table striped bordered hover>
@@ -39,7 +43,7 @@ function AddFood() {
                   </tr>
                 </thead>
                 <tbody>
-                  {foodData.map((food) => (
+                  {foods.map((food) => (
                     <tr key={food.id}>
                       <td>{food.name}</td>
                       <td>
