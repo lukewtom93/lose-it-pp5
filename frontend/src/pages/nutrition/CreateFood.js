@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Card, Col, Container, Dropdown, Form, Row } from "react-bootstrap";
 import { axiosReq } from "../../api/axiosDefaults";
 

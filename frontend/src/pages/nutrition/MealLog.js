@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap'
 import { axiosReq } from '../../api/axiosDefaults'
+import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
 
 function MealLog() {
     const [foods, setFoods] = useState([])
@@ -34,6 +35,13 @@ function MealLog() {
 
   return (
     <Container>
+        <NavLink exact to="/createfood">
+          <button type="button" className="btn btn-outline-primary ml-3 mr-3 ">Add new food</button>
+        </NavLink>
+        <NavLink exact to="/addfood">
+          <button type="button" className="btn btn-outline-primary ml-3 mr-3 ">Add food</button>
+        </NavLink>
+
         <Row>
             <Col>
             <Card>
