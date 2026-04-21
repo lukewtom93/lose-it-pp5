@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { axiosReq } from "../../api/axiosDefaults";
-import { Row, Col, Card, Container } from "react-bootstrap";
+import { Row, Col, Card, Container, Nav } from "react-bootstrap";
+import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import Chart from "../../components/Chart";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import styles from "../../styles/Dashboard.module.css"
@@ -14,6 +15,7 @@ function Dashboard() {
     goal_weight: "",
   });
 
+    
   useEffect(() => {
     if (!currentUser) return;
     const handleMount = async () => {
@@ -39,7 +41,7 @@ function Dashboard() {
     return <p>Loading...</p>;
   }
   return (
-    <Container className={styles.dashboard}>
+    <Container className={`${styles.dashboard}`}>
       <Row>
         <Col>
           <Card className={`p-3 h-100 ${styles.card}`}>
@@ -73,9 +75,21 @@ function Dashboard() {
             </div>
           </Card>
         </Col>
+        <Col>
+        <Card className={`p-3 h-100 ${styles.card}`}>
+          <Nav>
+    
+          <NavLink exact to="/currentbodyweight"><button type="button" className="btn btn-outline-primary">Log Weight</button></NavLink>
+          <button type="button" className="btn btn-outline-primary ml-3 mr-3 ">Log Meals</button>
+
+
+       
+          </Nav>
+        </Card>
+        </Col>
       </Row>
     </Container>
   );
-}
+};
 
 export default Dashboard;

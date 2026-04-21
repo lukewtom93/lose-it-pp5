@@ -26,9 +26,12 @@ class BodyWeightSerializer(serializers.ModelSerializer):
 
 
 class BodyWeightTrackerSerializer(serializers.ModelSerializer):
-    def get_created_at(self, obj):
-        return naturaltime(obj.created_at)
 
     class Meta:
         model = BodyWeightTracker
-        fields = '__all__'
+        fields = [
+            'current_weight',
+            'created_at',
+            'updated_at',
+            'id',
+        ]
