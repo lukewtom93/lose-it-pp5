@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { axiosReq } from "../../api/axiosDefaults";
 import { Row, Col, Card, Container, Form } from "react-bootstrap";
 import Chart from "../../components/Chart";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function CurrentBodyWeight() {
   const [currentWeightData, setCurrentWeightData] = useState([]);
@@ -9,6 +10,7 @@ function CurrentBodyWeight() {
     current_weight: "",
   });
   const { current_weight } = formData;
+  const history = useHistory();
 
   const handleChange = (event) => {
     setFormData({
@@ -27,6 +29,7 @@ function CurrentBodyWeight() {
     });
       setCurrentWeightData((prevData) => [...prevData, data]);
       setFormData({current_weight: "" });
+      history.push('/');
 
     } catch (error) {
       console.log(error);
