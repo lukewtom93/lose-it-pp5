@@ -14,6 +14,7 @@ import useFoods from "../../hooks/useFoods";
 import { axiosReq } from "../../api/axiosDefaults";
 
 
+
 function MealLog() {
   const today = new Date().toISOString().split("T")[0];
 
@@ -165,7 +166,7 @@ function MealLog() {
               <Form.Group className="mb-3" controlId="meal_type">
                 <Form.Label>Meal Type</Form.Label>
                 <Form.Control
-                as="select"
+                  as="select"
                   name="meal_type"
                   value={meal_type}
                   onChange={handleChange}
@@ -228,6 +229,7 @@ function MealLog() {
           </Card>
         </Col>
       </Row>
+   
 
       {entriesLoading ? (
         <p>Loading meals...</p>

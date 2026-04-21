@@ -5,15 +5,13 @@ import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import Chart from "../../components/Chart";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import styles from "../../styles/Dashboard.module.css"
+import DailyTotal from "../../components/DailyTotal";
 
 function Dashboard() {
   const currentUser = useCurrentUser();
   const [calorieData, setCalorieData] = useState(null);
   const [currentWeightData, setCurrentWeightData] = useState([]);
-  const [bodyWeightData, setBodyWeightData] = useState({
-    starting_weight: "",
-    goal_weight: "",
-  });
+
 
     
   useEffect(() => {
@@ -26,7 +24,6 @@ function Dashboard() {
           axiosReq.get("/daily-calorie-goal/today"),
         ]);
 
-        setBodyWeightData(Weight.data[0]);
         setCurrentWeightData(Current.data);
         setCalorieData(Calorie.data);
         console.log(Weight.data);
@@ -45,16 +42,9 @@ function Dashboard() {
       <Row>
         <Col>
           <Card className={`p-3 h-100 ${styles.card}`}>
-            <div>
-              <p>
-                Starting: {bodyWeightData?.starting_weight}{" "}
-                {bodyWeightData?.weight_unit}
-              </p>
-              <p>
-                Goal: {bodyWeightData?.goal_weight}{" "}
-                {bodyWeightData?.weight_unit}
-              </p>
-            </div>
+            
+              <DailyTotal/>
+            
           </Card>
         </Col>
 
