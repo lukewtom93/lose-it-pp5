@@ -42,13 +42,6 @@ REST_FRAMEWORK = {
 #     )],
 # }
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': [
-#         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
-#     ],
-#     # 'DATETIME_FORMAT': '%d %b %Y',
-
-# }
 
 if 'DEV' not in os.environ:
     REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
@@ -58,7 +51,7 @@ if 'DEV' not in os.environ:
 REST_USE_JWT = True
 JWT_AUTH_COOKIE = 'my-app-auth'
 JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
-JWT_AUTH_SAMESITE = 'none'  #'lax'
+JWT_AUTH_SAMESITE = 'None'  #'lax'
 JWT_AUTH_SECURE = True  #false
 
 REST_AUTH_SERIALIZERS = {
@@ -124,6 +117,10 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True    #changed from allowed
+
+CSRF_TRUSTED_ORIGINS = [
+    os.environ.get('CLIENT_ORIGIN'),
+]
 
 ROOT_URLCONF = 'drf_api.urls'
 

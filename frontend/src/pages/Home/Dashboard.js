@@ -11,19 +11,13 @@ function Dashboard() {
   const currentUser = useCurrentUser();
   const [calorieData, setCalorieData] = useState(null);
   const [currentWeightData, setCurrentWeightData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
 
     
   useEffect(() => {
-
+    if (!currentUser) return;
     const handleMount = async () => {
-          if (!currentUser) {
-            setIsLoading(false);
-            return;
-          }
       try {
-        setIsLoading(true);
         const [Weight, Current, Calorie] = await Promise.all([
           axiosReq.get("/body_weight/"),
           axiosReq.get("/body_weight/current/"),
@@ -35,14 +29,12 @@ function Dashboard() {
         console.log(Weight.data);
       } catch (error) {
         console.log(error);
-      } finally {
-        setIsLoading(false);
       }
     };
     handleMount();
   }, [currentUser]);
 
-  if (currentWeightData.length ===  undefined || isLoading) {
+  if (currentWeightData.length === 0) {
     return <p>Loading...</p>;
   }
   return (
@@ -50,9 +42,9 @@ function Dashboard() {
       <Row>
         <Col>
           <Card className={`p-3 h-100 ${styles.card}`}>
-            
+            <div>
               <DailyTotal/>
-            
+            </div>
           </Card>
         </Col>
 
