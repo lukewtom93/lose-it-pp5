@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { axiosReq } from "../../api/axiosDefaults";
 import { Row, Col, Card, Container, Form } from "react-bootstrap";
-import Chart from "../../components/Chart";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function CurrentBodyWeight() {
@@ -36,19 +35,6 @@ function CurrentBodyWeight() {
     }
   };
 
-  useEffect(() => {
-    const handleMount = async () => {
-      try {
-        const { data } = await axiosReq.get("/body_weight/current/");
-
-        setCurrentWeightData(data);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    handleMount();
-  }, []);
 
   if (!currentWeightData) {
     return <p>Loading...</p>;
@@ -74,16 +60,6 @@ function CurrentBodyWeight() {
                 Save
               </button>
             </Form>
-            {/* <div>
-                    {currentWeightData.map((entry) => (
-                        <div key={entry.id}>
-                            {entry.current_weight} - {entry.created_at}
-                        </div>
-                    ))}     
-                </div>
-                <div>
-                    <Chart data={currentWeightData} />
-                </div> */}
           </Card>
         </Col>
       </Row>

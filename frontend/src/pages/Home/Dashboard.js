@@ -80,8 +80,9 @@ function Dashboard() {
           <Nav>
     
           <NavLink exact to="/currentbodyweight"><button type="button" className="btn btn-outline-primary">Log Weight</button></NavLink>
+          <NavLink exact to="/meallog">
           <button type="button" className="btn btn-outline-primary ml-3 mr-3 ">Log Meals</button>
-
+          </NavLink>
 
        
           </Nav>

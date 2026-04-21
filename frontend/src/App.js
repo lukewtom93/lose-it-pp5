@@ -9,6 +9,8 @@ import BodyWeight from "./pages/bodyweight/BodyWeight";
 import Profile from "./pages/profile/Profile";
 import CurrentBodyWeight from "./pages/bodyweight/CurrentBodyWeight";
 import Dashboard from "./pages/Home/Dashboard";
+import MealLog from "./pages/nutrition/MealLog";
+import CreateFood from "./pages/nutrition/CreateFood";
 
 
 function App() {
@@ -24,6 +26,7 @@ function App() {
           <Route exact path="/profiles/:id" render={() => <Profile />} />
           <Route exact path="/bodyweight" render={() => <BodyWeight />} />
           <Route exact path="/currentbodyweight" render={() => <CurrentBodyWeight />} />
+          <Route exact path="/meallog" render={() => <CreateFood />} />
           <Route render={() => <p>Page not found!</p>} />
         </Switch>
       </Container>
