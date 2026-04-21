@@ -18,7 +18,7 @@ function Dashboard() {
     if (!currentUser) return;
     const handleMount = async () => {
       try {
-        const [Weight, Current, Calorie] = await Promise.all([
+        const [ Current, Calorie] = await Promise.all([
           axiosReq.get("/body_weight/"),
           axiosReq.get("/body_weight/current/"),
           axiosReq.get("/daily-calorie-goal/today"),
@@ -26,7 +26,7 @@ function Dashboard() {
 
         setCurrentWeightData(Current.data);
         setCalorieData(Calorie.data);
-        console.log(Weight.data);
+       
       } catch (error) {
         console.log(error);
       }
@@ -36,7 +36,8 @@ function Dashboard() {
 
   if (currentWeightData.length === 0) {
     return <p>Loading...</p>;
-  }
+  }console.log("currentWeightData:", currentWeightData);
+console.log("calorieData:", calorieData);
   return (
     <Container className={`${styles.dashboard}`}>
       <Row>
