@@ -101,16 +101,16 @@ function Dashboard() {
   return (
     <Container className={`${styles.dashboard}`}>
       <Row>
-        <Col>
+        <Col md={6}>
           <Card className={`p-3 h-100 ${styles.card}`}>
-            <div>
+            <div className={styles.section}>
               <DailyTotal
                 selectedDate={selectedDate}
                 setSelectedDate={setSelectedDate}
               />
             </div>
-            <div>
-              <p>Daily Calories: {calorieData?.calorie_goal}</p>
+            <div className={styles.section}>
+              <p className={styles.calorieGoal}>Daily Calories: {calorieData?.calorie_goal}</p>
               <CalorieProgress
                 calorieGoal={calorieData?.calorie_goal}
                 selectedDate={selectedDate}
@@ -119,14 +119,14 @@ function Dashboard() {
           </Card>
         </Col>
 
-        <Col>
+        <Col md={6}>
           <Card className={`p-3 h-100 ${styles.card}`}>
-            <div>
+            <div className={styles.chartWrap}>
               <Chart data={chartData} />
             </div>
-            <div>
+            <div className={styles.button}>
               <Nav>
-                <NavLink exact to="/currentbodyweight">
+                <NavLink exact to="/currentbodyweight" >
                   <button type="button" className="btn btn-outline-primary">
                     Log Weight
                   </button>
@@ -134,7 +134,7 @@ function Dashboard() {
                 <NavLink exact to="/meallog">
                   <button
                     type="button"
-                    className="btn btn-outline-primary ml-3 mr-3 "
+                    className="btn btn-outline-primary"
                   >
                     Log Meals
                   </button>

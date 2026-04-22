@@ -9,3 +9,43 @@
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
     background: #ffffff;
 }
+
+.section {
+  margin-bottom: 1.25rem;
+  
+}
+
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.calorieGoal {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.chartWrap {
+  width: 100%;
+  min-height: 320px;
+}
+
+
+@media (max-width: 767px) {
+  .dashboard {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .card {
+    margin-bottom: 1rem;
+  }
+
+  .chartWrap {
+    min-height: 260px;
+  }
+}
