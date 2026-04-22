@@ -15,7 +15,7 @@ const Chart =  ({data}) => {
     <div style={{ width: "100%", height: 300 }}>
     <ResponsiveContainer width="100%" height="100%">
         <LineChart data={chartData}>
-            <XAxis/>
+            <XAxis dataKey="date"/>
             <YAxis/>
             <CartesianGrid strokeDasharray="5 5"/>
             <Tooltip/>

@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Button, Card, Col, Container, Dropdown, Form, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Dropdown, Form, Row, Alert } from "react-bootstrap";
 import { axiosReq } from "../../api/axiosDefaults";
+import styles from "../../App.module.css"
 
 function CreateFood() {
   const [formData, setFormData] = useState({
@@ -18,6 +19,8 @@ function CreateFood() {
     { value: "each", label: "each" },
     { value: "slice", label: "slice" },
   ];
+  const [success, setSuccess] = useState("");
+  const [submitError, setSubmitError] = useState("");
 
   const { name, serving_size, serving_unit, calories, protein, carbs, fat } =
     formData;
@@ -32,11 +35,15 @@ function CreateFood() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setSuccess("");
+    setSubmitError("");
     try {
        await axiosReq.post("/food/", formData);
+       setSuccess("Food Created")
 
     } catch (error) {
       console.log(error);
+      setSubmitError("Food not Created")
     }
   };
 
@@ -44,7 +51,10 @@ function CreateFood() {
     <Container>
       <Row>
         <Col>
-          <Card>
+          <Card className={`p-3 ${styles.card}`}>
+            <h2>Create New Food</h2>
+            {success && <Alert variant="success">{success}</Alert>}
+            {submitError && <Alert variant="danger">{submitError}</Alert>}
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="name">
                 <Form.Label>Name</Form.Label>

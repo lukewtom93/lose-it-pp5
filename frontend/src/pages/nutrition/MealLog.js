@@ -12,6 +12,8 @@ import {
 import useMealEntries from "../../hooks/useMealEntries.js";
 import useFoods from "../../hooks/useFoods";
 import { axiosReq } from "../../api/axiosDefaults";
+import { NavLink } from "react-router-dom/cjs/react-router-dom.min.js";
+import styles from "../../App.module.css"
 
 
 
@@ -99,7 +101,7 @@ function MealLog() {
   }, [entries]);
 
   const renderMealSection = (title, mealEntries) => (
-    <Card className="mb-3">
+    <Card className={`mb-3 ${styles.card}`}>
       <Card.Body>
         <h4>{title}</h4>
         {mealEntries.length === 0 ? (
@@ -138,9 +140,11 @@ function MealLog() {
     <Container>
       <Row className="mb-4">
         <Col md={8}>
-          <Card className="p-4">
-            <h2 className="mb-3">Meal Log</h2>
-
+          <Card className={`p-3 ${styles.card}`}>
+            <div className="d-flex justify-content-between align-items-center mb-3">          
+            <h2>Meal Log</h2>
+            <NavLink to="/createfood"><Button>Create New Food</Button></NavLink>
+            </div>
             {success && <Alert variant="success">{success}</Alert>}
             {submitError && <Alert variant="danger">{submitError}</Alert>}
 
@@ -211,7 +215,7 @@ function MealLog() {
         </Col>
 
         <Col md={4}>
-          <Card className="p-4">
+          <Card className={`p-3 ${styles.card}`}>
             <h3>Daily Totals</h3>
             <Form.Group className="mb-3" controlId="selectedDate">
               <Form.Label>Date</Form.Label>
