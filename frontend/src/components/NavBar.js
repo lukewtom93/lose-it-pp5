@@ -12,11 +12,13 @@ import axios from "axios";
 import { removeTokenTimestamp } from "../utils/utils";
 import Avatar from "./Avatar";
 import useClickOutsideToggle from "../hooks/useClickOutsideToggle";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const NavBar = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
 
+  const history = useHistory()
  
   const {expanded, setExpanded, ref} = useClickOutsideToggle();
 
@@ -26,6 +28,7 @@ const NavBar = () => {
       await axios.post("dj-rest-auth/logout/");
       setCurrentUser(null);
       removeTokenTimestamp()
+      history.push('/signin')
     } catch (err) {
       console.log(err);
     }console.log(document.cookie);
