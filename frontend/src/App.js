@@ -6,7 +6,6 @@ import "./api/axiosDefaults";
 import SignUpForm from "./pages/auth/SignUpForm";
 import SignInForm from "./pages/auth/SignInForm";
 import BodyWeight from "./pages/bodyweight/BodyWeight";
-import Profile from "./pages/profile/Profile";
 import CurrentBodyWeight from "./pages/bodyweight/CurrentBodyWeight";
 import Dashboard from "./pages/Home/Dashboard";
 import MealLog from "./pages/nutrition/MealLog";
@@ -24,7 +23,6 @@ function App() {
           <Route exact path="/" render={() => <Dashboard />} />
           <Route exact path="/signin" render={() => <SignInForm />} />
           <Route exact path="/signup" render={() => <SignUpForm />} />
-          <Route exact path="/profiles/:id" render={() => <Profile />} />
           <Route exact path="/bodyweight" render={() => <BodyWeight />} />
           <Route exact path="/currentbodyweight" render={() => <CurrentBodyWeight />} />
           <Route exact path="/meallog" render={() => <MealLog />} />

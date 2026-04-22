@@ -98,7 +98,6 @@ function Dashboard() {
     });
   }, [weightData, currentWeightData]);
 
-
   return (
     <Container className={`${styles.dashboard}`}>
       <Row>
@@ -110,21 +109,6 @@ function Dashboard() {
                 setSelectedDate={setSelectedDate}
               />
             </div>
-          </Card>
-        </Col>
-
-        <Col>
-          <Card className={`p-3 h-100 ${styles.card}`}>
-            <div>
-              <Chart data={chartData} />
-            </div>
-          </Card>
-        </Col>
-      </Row>
-
-      <Row>
-        <Col>
-          <Card className={`p-3 h-100 ${styles.card}`}>
             <div>
               <p>Daily Calories: {calorieData?.calorie_goal}</p>
               <CalorieProgress
@@ -134,23 +118,29 @@ function Dashboard() {
             </div>
           </Card>
         </Col>
+
         <Col>
           <Card className={`p-3 h-100 ${styles.card}`}>
-            <Nav>
-              <NavLink exact to="/currentbodyweight">
-                <button type="button" className="btn btn-outline-primary">
-                  Log Weight
-                </button>
-              </NavLink>
-              <NavLink exact to="/meallog">
-                <button
-                  type="button"
-                  className="btn btn-outline-primary ml-3 mr-3 "
-                >
-                  Log Meals
-                </button>
-              </NavLink>
-            </Nav>
+            <div>
+              <Chart data={chartData} />
+            </div>
+            <div>
+              <Nav>
+                <NavLink exact to="/currentbodyweight">
+                  <button type="button" className="btn btn-outline-primary">
+                    Log Weight
+                  </button>
+                </NavLink>
+                <NavLink exact to="/meallog">
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary ml-3 mr-3 "
+                  >
+                    Log Meals
+                  </button>
+                </NavLink>
+              </Nav>
+            </div>
           </Card>
         </Col>
       </Row>
