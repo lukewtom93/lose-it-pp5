@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, Card, Col, Container, Dropdown, Form, Row, Alert } from "react-bootstrap";
 import { axiosReq } from "../../api/axiosDefaults";
 import styles from "../../App.module.css"
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function CreateFood() {
   // Form state for a reusable food item
@@ -22,8 +23,9 @@ function CreateFood() {
     { value: "each", label: "each" },
     { value: "slice", label: "slice" },
   ];
-  const [success, setSuccess] = useState("");
+
   const [submitError, setSubmitError] = useState("");
+  const history = useHistory();
 
   const { name, serving_size, serving_unit, calories, protein, carbs, fat } =
     formData;
@@ -38,12 +40,14 @@ function CreateFood() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setSuccess("");
     setSubmitError("");
     try {
       // Sends the food object to the backend
        await axiosReq.post("/food/", formData);
-       setSuccess("Food Created")
+       // Sends user back to meal log
+       history.push("/meallog", {
+        successMessage: (`${name} created`)
+       })
 
     } catch (error) {
       console.log(error);
@@ -57,7 +61,6 @@ function CreateFood() {
         <Col>
           <Card className={`p-3 ${styles.card}`}>
             <h2>Create New Food</h2>
-            {success && <Alert variant="success">{success}</Alert>}
             {submitError && <Alert variant="danger">{submitError}</Alert>}
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="name">

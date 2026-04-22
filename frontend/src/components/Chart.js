@@ -17,6 +17,39 @@ const Chart = ({ data }) => {
     target_weight: Number(entry.target_weight),
   }));
 
+  const CustomLegend = () => (
+    <div className="d-flex justify-content-center gap-4 mt-3">
+      <span>
+        <svg width="30" height="10">
+          <line
+            x1="0"
+            y1="5"
+            x2="30"
+            y2="5"
+            stroke="currentColor"
+            strokeWidth="3"
+          />
+        </svg>
+        Current Weight
+      </span>
+
+      <span>
+        <svg width="30" height="10">
+          <line
+            x1="0"
+            y1="5"
+            x2="30"
+            y2="5"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeDasharray="6 4"
+          />
+        </svg>
+        Target Weight
+      </span>
+    </div>
+  );
+
   return (
     <div style={{ width: "100%", height: 300 }}>
       <ResponsiveContainer width="100%" height="100%">
@@ -41,9 +74,9 @@ const Chart = ({ data }) => {
               })
             }
           />
-          <Legend />
-          <Line type="monotone" dataKey="current_weight" />
-          <Line type="monotone" dataKey="target_weight" />
+          <Legend content={<CustomLegend/>}/>
+          <Line type="monotone" dataKey="current_weight" strokeWidth={3} />
+          <Line type="monotone" dataKey="target_weight" strokeDasharray="6 4"/>
         </LineChart>
       </ResponsiveContainer>
     </div>

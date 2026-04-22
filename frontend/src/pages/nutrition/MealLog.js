@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Button,
   Card,
@@ -12,20 +12,25 @@ import {
 import useMealEntries from "../../hooks/useMealEntries.js";
 import useFoods from "../../hooks/useFoods";
 import { axiosReq } from "../../api/axiosDefaults";
-import { NavLink } from "react-router-dom/cjs/react-router-dom.min.js";
+import {
+  NavLink,
+  useHistory,
+  useLocation,
+} from "react-router-dom/cjs/react-router-dom.min.js";
 import styles from "../../App.module.css";
 
 function MealLog() {
   const today = new Date().toISOString().split("T")[0];
-  
+
   // The date being viewed in the meal log
   const [selectedDate, setSelectedDate] = useState(today);
-
-  // Success/error messages for meal submission.
-  const [success, setSuccess] = useState("");
-  const [submitError, setSubmitError] = useState("");
   
-   // All foods available to choose from in the dropdown
+  const location = useLocation();
+  // Success/error messages for meal submission.
+  const [success, setSuccess] = useState(location.state?.successMessage || "");
+  const [submitError, setSubmitError] = useState("");
+
+  // All foods available to choose from in the dropdown
   const { foods, loading: foodsLoading } = useFoods();
 
   // All meal entries for the selected date
@@ -34,8 +39,8 @@ function MealLog() {
     setEntries,
     loading: entriesLoading,
   } = useMealEntries(selectedDate);
-  
-   // Form state for the meal-entry form
+
+  // Form state for the meal-entry form
   const [formData, setFormData] = useState({
     food: "",
     meal_type: "breakfast",
@@ -44,6 +49,16 @@ function MealLog() {
   });
 
   const { food, meal_type, quantity, consumed_at } = formData;
+  const history = useHistory();
+
+  useEffect(() => {
+    if (location.state?.successMessage) {
+      history.replace({
+        ...location,
+        state: {},
+      });
+    }
+  }, [location, history]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -58,7 +73,6 @@ function MealLog() {
     setSuccess("");
     setSubmitError("");
 
-    
     try {
       const payload = {
         food: parseInt(food, 10),
