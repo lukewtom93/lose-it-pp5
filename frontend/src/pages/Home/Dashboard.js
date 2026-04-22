@@ -6,6 +6,7 @@ import Chart from "../../components/Chart";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import styles from "../../styles/Dashboard.module.css"
 import DailyTotal from "../../components/DailyTotal";
+import CalorieProgress from "../../components/CalorieProgress";
 
 function Dashboard() {
   const currentUser = useCurrentUser();
@@ -64,7 +65,7 @@ function Dashboard() {
       }
     })
   }, [weightData, currentWeightData]);
-  console.log(chartData)
+
 
     if (currentWeightData.length === 0) {
     return <p>Loading...</p>;
@@ -95,6 +96,7 @@ function Dashboard() {
           <Card className={`p-3 h-100 ${styles.card}`}>
             <div>
               <p>Daily Calories: {calorieData?.calorie_goal}</p>
+              <CalorieProgress calorieGoal={calorieData?.calorie_goal}/>
             </div>
           </Card>
         </Col>
