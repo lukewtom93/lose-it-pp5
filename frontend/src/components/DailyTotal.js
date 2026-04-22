@@ -2,10 +2,9 @@ import { useState, useMemo } from "react";
 import { Form } from "react-bootstrap";
 import useMealEntries from "../hooks/useMealEntries";
 
-const DailyTotal = () => {
-  const today = new Date().toISOString().split("T")[0];
 
-  const [selectedDate, setSelectedDate] = useState(today);
+const DailyTotal = ({ selectedDate, setSelectedDate}) => {
+
   const { entries } = useMealEntries(selectedDate)
   const totals = useMemo(() => {
     return entries.reduce(
@@ -45,6 +44,7 @@ const DailyTotal = () => {
           <p>
             <strong>Fat:</strong> {totals.fat.toFixed(2)}g
           </p>
+
         </div>
      
 
