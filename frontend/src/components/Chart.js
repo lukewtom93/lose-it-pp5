@@ -3,6 +3,7 @@ import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tool
 
 
 const Chart =  ({data}) => {
+   // Normalizes the incoming data into the exact keys the chart needs
   const chartData = data.map((entry) => ({
 
 

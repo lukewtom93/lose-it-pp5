@@ -4,8 +4,10 @@ import useMealEntries from "../hooks/useMealEntries";
 
 
 const DailyTotal = ({ selectedDate, setSelectedDate}) => {
-
+  // Pull the meal entries for the currently selected day
   const { entries } = useMealEntries(selectedDate)
+
+  // Sum all the nutrition values for the day.
   const totals = useMemo(() => {
     return entries.reduce(
       (acc, entry) => {

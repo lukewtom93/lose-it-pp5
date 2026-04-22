@@ -4,6 +4,7 @@ import { axiosReq } from "../../api/axiosDefaults";
 import styles from "../../App.module.css"
 
 function CreateFood() {
+  // Form state for a reusable food item
   const [formData, setFormData] = useState({
     name: "",
     serving_size: "",
@@ -13,6 +14,8 @@ function CreateFood() {
     carbs: "",
     fat: "",
   });
+
+  // The serving-unit choices used in the dropdown
   const unitChoices = [
     { value: "g", label: "Grams" },
     { value: "ml", label: "Millileters" },
@@ -38,6 +41,7 @@ function CreateFood() {
     setSuccess("");
     setSubmitError("");
     try {
+      // Sends the food object to the backend
        await axiosReq.post("/food/", formData);
        setSuccess("Food Created")
 

@@ -17,18 +17,25 @@ import styles from "../../App.module.css";
 
 function MealLog() {
   const today = new Date().toISOString().split("T")[0];
-
+  
+  // The date being viewed in the meal log
   const [selectedDate, setSelectedDate] = useState(today);
+
+  // Success/error messages for meal submission.
   const [success, setSuccess] = useState("");
   const [submitError, setSubmitError] = useState("");
-
+  
+   // All foods available to choose from in the dropdown
   const { foods, loading: foodsLoading } = useFoods();
+
+  // All meal entries for the selected date
   const {
     entries,
     setEntries,
     loading: entriesLoading,
   } = useMealEntries(selectedDate);
-
+  
+   // Form state for the meal-entry form
   const [formData, setFormData] = useState({
     food: "",
     meal_type: "breakfast",
@@ -51,6 +58,7 @@ function MealLog() {
     setSuccess("");
     setSubmitError("");
 
+    
     try {
       const payload = {
         food: parseInt(food, 10),
@@ -59,13 +67,17 @@ function MealLog() {
         consumed_at,
       };
 
+      // Creates a new meal entry
       const { data } = await axiosReq.post("/meal-entry/", payload);
 
+      // Only insert the new entry into the current list if its date matches
+      // the date the user is currently viewing
       const entryDate = new Date(data.consumed_at).toISOString().split("T")[0];
       if (entryDate === selectedDate) {
         setEntries((prev) => [data, ...prev]);
       }
 
+      // Reset the form after successful submission.
       setFormData({
         food: "",
         meal_type: "breakfast",
@@ -80,6 +92,7 @@ function MealLog() {
     }
   };
 
+  // Handles delete on selected meal entry
   const handleDelete = async (entryId) => {
     try {
       await axiosReq.delete(`/meal-entry/${entryId}`);
@@ -89,6 +102,7 @@ function MealLog() {
     }
   };
 
+  // Split entries into sections for separate breakfast/lunch/dinner/snack tables
   const groupedMeals = useMemo(() => {
     return {
       breakfast: entries.filter((entry) => entry.meal_type === "breakfast"),
@@ -98,6 +112,7 @@ function MealLog() {
     };
   }, [entries]);
 
+  // Daily nutrition totals for the selected date
   const totals = useMemo(() => {
     return entries.reduce(
       (acc, entry) => {

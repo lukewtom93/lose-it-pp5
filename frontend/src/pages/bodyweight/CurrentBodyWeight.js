@@ -4,7 +4,10 @@ import { Row, Col, Card, Container, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function CurrentBodyWeight() {
+  // Stores the created weight entry array
   const [currentWeightData, setCurrentWeightData] = useState([]);
+
+  // stores current weight
   const [formData, setFormData] = useState({
     current_weight: "",
   });
@@ -22,12 +25,18 @@ function CurrentBodyWeight() {
     event.preventDefault();
 
     try {
+      // Sends only the new current-weight value
       const { data } = await axiosReq.post(
         "/body_weight/current/",{
        current_weight: parseFloat(current_weight),
     });
+      // Add the new entry to local state so the UI can update
       setCurrentWeightData((prevData) => [...prevData, data]);
+
+      // Clear the form after saving
       setFormData({current_weight: "" });
+
+      // Send the user back to the dashboard
       history.push('/');
 
     } catch (error) {

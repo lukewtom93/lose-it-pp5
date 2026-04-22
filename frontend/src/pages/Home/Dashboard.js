@@ -10,16 +10,27 @@ import CalorieProgress from "../../components/CalorieProgress";
 
 function Dashboard() {
   const currentUser = useCurrentUser();
+
+  // Daily calorie goal for the backend
   const [calorieData, setCalorieData] = useState(null);
+
+  // Logged body-weight entries over time.
   const [currentWeightData, setCurrentWeightData] = useState([]);
+
+  // Holds the main body-weight profile with starting_weight + goal_weight
   const [weightData, setWeightData] = useState([]);
+
+  // The shared date state for DailyTotal and CalorieProgress
   const today = new Date().toISOString().split("T")[0];
   const [selectedDate, setSelectedDate] = useState(today);
 
   useEffect(() => {
+    // Checks if user exists
     if (!currentUser) return;
+
     const handleMount = async () => {
       try {
+        // Fetch all needed dashboard data
         const [Weight, Current, Calorie] = await Promise.all([
           axiosReq.get("/body_weight/"),
           axiosReq.get("/body_weight/current/"),
@@ -35,30 +46,53 @@ function Dashboard() {
     handleMount();
   }, [currentUser]);
 
+  // Chart data with current weight and target weight over time
   const chartData = useMemo(() => {
     const bodyWeight = weightData[0];
+
+    // If there is no profile or no log entry theres nothong to plot
     if (!bodyWeight || !currentWeightData.length) return [];
+
+    // This controls how long the goal target is
     const GOAL_WEEKS = 12;
+
     const startWeight = Number(bodyWeight.starting_weight);
     const goalWeight = Number(bodyWeight.goal_weight);
+
+    // Sorts weights from oldest to newest for chart data
     const sortedEntries = [...currentWeightData].sort(
       (oldest, newest) =>
         new Date(oldest.created_at) - new Date(newest.created_at),
     );
+
+    // the target is set on the first weight log
     const startDate = new Date(sortedEntries[0].created_at);
+
+    // Sets date for end goal
     const targetEndDate = new Date(startDate);
     targetEndDate.setDate(targetEndDate.getDate() + GOAL_WEEKS * 7);
 
     const totalTime = targetEndDate - startDate;
     return sortedEntries.map((entry) => {
       const entryDate = new Date(entry.created_at);
+
+      // Target end date is calculated from how far between 0 and 1 is
       let progress = totalTime <= 0 ? 1 : (entryDate - startDate) / totalTime;
+
+      // stops progress from going above 1 or below 0
       progress = Math.max(0, Math.min(1, progress));
+
+      // creating line for the data points
       const targetWeight = startWeight + (goalWeight - startWeight) * progress;
 
       return {
+        // date for the Chart component
         date: entry.created_at,
+
+        // Value data for the backend
         current_weight: Number(entry.current_weight),
+
+        // Data for the path of the target weight data points
         target_weight: Number(targetWeight.toFixed(2)),
       };
     });
