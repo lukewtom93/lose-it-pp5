@@ -98,9 +98,6 @@ function Dashboard() {
     });
   }, [weightData, currentWeightData]);
 
-  if (currentWeightData.length === 0) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <Container className={`${styles.dashboard}`}>

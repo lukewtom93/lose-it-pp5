@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, Container, Dropdown, Form, Row, Col } from "react-bootstrap";
 import { axiosReq } from "../../api/axiosDefaults";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function BodyWeight() {
   const [bodyWeightData, setBodyWeightData] = useState({
@@ -15,12 +16,14 @@ function BodyWeight() {
     { value: "st", label: "Stone" },
   ];
 
+  const history = useHistory();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const { data } = await axiosReq.post("/body_weight/", bodyWeightData);
       setBodyWeightData(data);
-      console.log(data);
+      history.push('/');
     } catch (error) {
       console.log(error.respose || error);
     }
@@ -38,7 +41,6 @@ function BodyWeight() {
       try {
         const { data } = await axiosReq.get("/body_weight/");
         setUnit(data[0].weight_unit);
-        console.log(data);
         setBodyWeightData(data[0]);
       } catch (error) {
         console.log(error);
