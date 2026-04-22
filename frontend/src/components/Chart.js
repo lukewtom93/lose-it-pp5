@@ -1,11 +1,14 @@
 import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 
 
-const Chart = ({data}) => {
+
+const Chart =  ({data}) => {
   const chartData = data.map((entry) => ({
+
 
     date: entry.created_at,
     current_weight: Number(entry.current_weight),
+    target_weight: Number(entry.target_weight),
   }))
 
   return (
@@ -18,6 +21,7 @@ const Chart = ({data}) => {
             <Tooltip/>
             <Legend/>
         <Line type="monotone" dataKey="current_weight" />
+        <Line type="monotone" dataKey="target_weight" />
         </LineChart>
     </ResponsiveContainer>
     </div>
