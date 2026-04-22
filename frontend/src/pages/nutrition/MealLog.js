@@ -13,9 +13,7 @@ import useMealEntries from "../../hooks/useMealEntries.js";
 import useFoods from "../../hooks/useFoods";
 import { axiosReq } from "../../api/axiosDefaults";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min.js";
-import styles from "../../App.module.css"
-
-
+import styles from "../../App.module.css";
 
 function MealLog() {
   const today = new Date().toISOString().split("T")[0];
@@ -25,7 +23,11 @@ function MealLog() {
   const [submitError, setSubmitError] = useState("");
 
   const { foods, loading: foodsLoading } = useFoods();
-  const { entries, setEntries, loading: entriesLoading } = useMealEntries(selectedDate);
+  const {
+    entries,
+    setEntries,
+    loading: entriesLoading,
+  } = useMealEntries(selectedDate);
 
   const [formData, setFormData] = useState({
     food: "",
@@ -78,6 +80,15 @@ function MealLog() {
     }
   };
 
+  const handleDelete = async (entryId) => {
+    try {
+      await axiosReq.delete(`/meal-entry/${entryId}`);
+      setEntries((prev) => prev.filter((entry) => entry.id !== entryId));
+    } catch (error) {
+      console.log(error.response?.data || error);
+    }
+  };
+
   const groupedMeals = useMemo(() => {
     return {
       breakfast: entries.filter((entry) => entry.meal_type === "breakfast"),
@@ -96,7 +107,7 @@ function MealLog() {
         acc.fat += Number(entry.total_fat || 0);
         return acc;
       },
-      { calories: 0, protein: 0, carbs: 0, fat: 0 }
+      { calories: 0, protein: 0, carbs: 0, fat: 0 },
     );
   }, [entries]);
 
@@ -127,6 +138,16 @@ function MealLog() {
                   <td>{entry.total_protein}</td>
                   <td>{entry.total_carbs}</td>
                   <td>{entry.total_fat}</td>
+                  <td>
+                    {" "}
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      onClick={() => handleDelete(entry.id)}
+                    >
+                      Delete
+                    </Button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -141,9 +162,11 @@ function MealLog() {
       <Row className="mb-4">
         <Col md={8}>
           <Card className={`p-3 ${styles.card}`}>
-            <div className="d-flex justify-content-between align-items-center mb-3">          
-            <h2>Meal Log</h2>
-            <NavLink to="/createfood"><Button>Create New Food</Button></NavLink>
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <h2>Meal Log</h2>
+              <NavLink to="/createfood">
+                <Button>Create New Food</Button>
+              </NavLink>
             </div>
             {success && <Alert variant="success">{success}</Alert>}
             {submitError && <Alert variant="danger">{submitError}</Alert>}
@@ -226,14 +249,21 @@ function MealLog() {
               />
             </Form.Group>
 
-            <p><strong>Calories:</strong> {totals.calories.toFixed(2)}</p>
-            <p><strong>Protein:</strong> {totals.protein.toFixed(2)}g</p>
-            <p><strong>Carbs:</strong> {totals.carbs.toFixed(2)}g</p>
-            <p><strong>Fat:</strong> {totals.fat.toFixed(2)}g</p>
+            <p>
+              <strong>Calories:</strong> {totals.calories.toFixed(2)}
+            </p>
+            <p>
+              <strong>Protein:</strong> {totals.protein.toFixed(2)}g
+            </p>
+            <p>
+              <strong>Carbs:</strong> {totals.carbs.toFixed(2)}g
+            </p>
+            <p>
+              <strong>Fat:</strong> {totals.fat.toFixed(2)}g
+            </p>
           </Card>
         </Col>
       </Row>
-   
 
       {entriesLoading ? (
         <p>Loading meals...</p>

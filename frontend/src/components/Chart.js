@@ -6,7 +6,7 @@ const Chart =  ({data}) => {
   const chartData = data.map((entry) => ({
 
 
-    date: entry.created_at,
+    date: entry.date,
     current_weight: Number(entry.current_weight),
     target_weight: Number(entry.target_weight),
   }))

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { Form } from "react-bootstrap";
 import useMealEntries from "../hooks/useMealEntries";
 
