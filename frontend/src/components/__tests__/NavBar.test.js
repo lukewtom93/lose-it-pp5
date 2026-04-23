@@ -4,7 +4,7 @@ import NavBar from "../NavBar"
 import { CurrentUserProvider } from "../../contexts/CurrentUserContext";
 
 
-test('reders Navbar', () => {
+test('renders Navbar', () => {
     render(<Router>
         <NavBar />
     </Router>);

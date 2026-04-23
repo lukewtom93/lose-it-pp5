@@ -9,7 +9,7 @@ import {
   Legend,
 } from "recharts";
 
-const Chart = ({ data }) => {
+const Chart = ({ data = [] }) => {
   // Normalizes the incoming data into the exact keys the chart needs
   const chartData = data.map((entry) => ({
     date: entry.date,
