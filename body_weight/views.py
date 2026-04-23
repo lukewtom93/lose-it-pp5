@@ -5,7 +5,7 @@ from .models import BodyWeight, BodyWeightTracker
 from .serializer import BodyWeightSerializer, BodyWeightTrackerSerializer
 
 
-class WeightList(generics.ListCreateAPIView):
+class BodyWeightList(generics.ListCreateAPIView):
     serializer_class = BodyWeightSerializer
     queryset = BodyWeight.objects.all()
     permission_classes = [permissions.IsAuthenticated]
@@ -17,6 +17,14 @@ class WeightList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class BodyWeightDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = BodyWeightSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return BodyWeight.objects.filter(owner=self.request.user)
 
 
 class CurrentWeightList(generics.ListCreateAPIView):
