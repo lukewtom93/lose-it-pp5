@@ -110,7 +110,9 @@ function Dashboard() {
               />
             </div>
             <div className={styles.section}>
-              <p className={styles.calorieGoal}>Daily Calories: {calorieData?.calorie_goal}</p>
+              <p className={styles.calorieGoal}>
+                Daily Calories: {calorieData?.calorie_goal}
+              </p>
               <CalorieProgress
                 calorieGoal={calorieData?.calorie_goal}
                 selectedDate={selectedDate}
@@ -126,20 +128,25 @@ function Dashboard() {
             </div>
             <div className={styles.button}>
               <Nav>
-                <NavLink exact to="/currentbodyweight" >
-                  <button type="button" className="btn btn-outline-primary">
+                <NavLink exact to="/currentbodyweight">
+                  <button type="button" className="btn btn-outline-primary ml-3 mr-3">
                     Log Weight
                   </button>
                 </NavLink>
                 <NavLink exact to="/meallog">
-                  <button
-                    type="button"
-                    className="btn btn-outline-primary"
-                  >
+                  <button type="button" className="btn btn-outline-primary ml-3 mr-3">
                     Log Meals
                   </button>
                 </NavLink>
               </Nav>
+              <NavLink exact to="/bodyweight">
+                <button
+                  type="button"
+                  className="btn btn-outline-primary ml-3 mr-3"
+                >
+                  Edit Goals
+                </button>
+              </NavLink>
             </div>
           </Card>
         </Col>

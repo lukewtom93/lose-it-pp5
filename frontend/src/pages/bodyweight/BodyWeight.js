@@ -1,71 +1,152 @@
 import { useEffect, useState } from "react";
-import { Card, Container, Dropdown, Form, Row, Col } from "react-bootstrap";
+import { Card, Container, Dropdown, Form, Row, Col, Alert, Button } from "react-bootstrap";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function BodyWeight() {
+  const history = useHistory();
+
   const [bodyWeightData, setBodyWeightData] = useState({
     starting_weight: "",
     goal_weight: "",
+    weight_unit: "kg",
   });
-  const { starting_weight, goal_weight } = bodyWeightData;
+
+  const [bodyWeightId, setBodyWeightId] = useState(null);
   const [unit, setUnit] = useState("kg");
+  const [isLoading, setIsLoading] = useState(true);
+  const [submitError, setSubmitError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const { starting_weight, goal_weight } = bodyWeightData;
+
   const unitChoices = [
     { value: "kg", label: "Kilograms" },
     { value: "lb", label: "Pounds" },
     { value: "st", label: "Stone" },
   ];
 
-  const history = useHistory();
+  const handleChange = (event) => {
+    setBodyWeightData((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const handleUnitSelect = (value) => {
+    setUnit(value);
+    setBodyWeightData((prev) => ({
+      ...prev,
+      weight_unit: value,
+    }));
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setSubmitError("");
+    setSuccess("");
+
     try {
-      const { data } = await axiosReq.post("/body_weight/", bodyWeightData);
-      setBodyWeightData(data);
-      history.push('/');
+      const payload = {
+        starting_weight: parseFloat(starting_weight),
+        goal_weight: parseFloat(goal_weight),
+        weight_unit: unit,
+      };
+
+      let data;
+
+      if (bodyWeightId) {
+        // update existing body weight record
+        const response = await axiosReq.put(`/body_weight/${bodyWeightId}/`, payload);
+        data = response.data;
+        setSuccess("Body weight updated successfully.");
+      } else {
+        // create new body weight record
+        const response = await axiosReq.post("/body_weight/", payload);
+        data = response.data;
+        setBodyWeightId(data.id);
+        setSuccess("Body weight created successfully.");
+      }
+
+      setBodyWeightData({
+        starting_weight: data.starting_weight,
+        goal_weight: data.goal_weight,
+        weight_unit: data.weight_unit,
+      });
+      setUnit(data.weight_unit);
+
+      history.push("/");
     } catch (error) {
-      console.log(error.respose || error);
+      console.log(error.response?.data || error);
+      setSubmitError("Could not save body weight data.");
     }
   };
 
-  const handleChange = (event) => {
-    setBodyWeightData({
-      ...bodyWeightData,
-      [event.target.name]: event.target.value,
-    });
-  };
-
   useEffect(() => {
+    let isMounted = true;
+
     const handleMount = async () => {
       try {
         const { data } = await axiosReq.get("/body_weight/");
-        setUnit(data[0].weight_unit);
-        setBodyWeightData(data[0]);
+
+        if (!isMounted) return;
+
+        if (data.length > 0) {
+          const existing = data[0];
+          setBodyWeightId(existing.id);
+          setUnit(existing.weight_unit || "kg");
+          setBodyWeightData({
+            starting_weight: existing.starting_weight || "",
+            goal_weight: existing.goal_weight || "",
+            weight_unit: existing.weight_unit || "kg",
+          });
+        }
       } catch (error) {
-        console.log(error);
+        console.log(error.response?.data || error);
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
     };
+
     handleMount();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <Container className="mt-5">
       <Row className="justify-content-center">
-        <Col md={6} >
-          <Card>
+        <Col md={6}>
+          <Card className="p-3">
             <Card.Body>
+              <h2 className="mb-3">
+                {bodyWeightId ? "Edit Body Weight Goals" : "Set Body Weight Goals"}
+              </h2>
+
+              {success && <Alert variant="success">{success}</Alert>}
+              {submitError && <Alert variant="danger">{submitError}</Alert>}
+
               <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="starting_weight">
-                  <Form.Label className="d-none">Starting Weight</Form.Label>
+                <Form.Group controlId="starting_weight" className="mb-3">
+                  <Form.Label>Starting Weight</Form.Label>
 
                   <div className="input-group">
                     <Form.Control
-                      type="text"
+                      type="number"
+                      step="0.01"
                       placeholder="Starting Weight"
                       name="starting_weight"
                       value={starting_weight}
                       onChange={handleChange}
+                      required
                     />
 
                     <Dropdown>
@@ -77,13 +158,7 @@ function BodyWeight() {
                         {unitChoices.map((choice) => (
                           <Dropdown.Item
                             key={choice.value}
-                            onClick={() => {
-                              setUnit(choice.value);
-                              setBodyWeightData({
-                                ...bodyWeightData,
-                                weight_unit: choice.value,
-                              });
-                            }}
+                            onClick={() => handleUnitSelect(choice.value)}
                           >
                             {choice.label}
                           </Dropdown.Item>
@@ -93,34 +168,37 @@ function BodyWeight() {
                   </div>
                 </Form.Group>
 
-                <Form.Group controlId="goal_weight">
-                  <Form.Label className="d-none">Goal Weight</Form.Label>
+                <Form.Group controlId="goal_weight" className="mb-3">
+                  <Form.Label>Goal Weight</Form.Label>
 
                   <div className="input-group">
                     <Form.Control
-                      type="text"
+                      type="number"
+                      step="0.01"
                       placeholder="Goal Weight"
                       name="goal_weight"
                       value={goal_weight}
                       onChange={handleChange}
+                      required
                     />
 
                     <div className="input-group-text">{unit}</div>
                   </div>
                 </Form.Group>
-                <button type="submit" className="mt-3 mb-3">
-                  save
-                </button>
+
+                <Button type="submit" className="mt-2">
+                  {bodyWeightId ? "Update Goals" : "Save Goals"}
+                </Button>
               </Form>
 
-              <div className="col">
+              <div className="mt-4">
                 <p>
-                  Starting: {bodyWeightData?.starting_weight}{" "}
-                  {bodyWeightData?.weight_unit}
+                  <strong>Starting:</strong> {bodyWeightData?.starting_weight}{" "}
+                  {bodyWeightData?.weight_unit || unit}
                 </p>
                 <p>
-                  Goal: {bodyWeightData?.goal_weight}{" "}
-                  {bodyWeightData?.weight_unit}
+                  <strong>Goal:</strong> {bodyWeightData?.goal_weight}{" "}
+                  {bodyWeightData?.weight_unit || unit}
                 </p>
               </div>
             </Card.Body>
