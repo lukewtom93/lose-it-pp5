@@ -28,3 +28,42 @@ test("renders chart container", () => {
   expect(screen.getByTestId("responsive-container")).toBeInTheDocument();
   expect(screen.getByTestId("line-chart")).toBeInTheDocument();
 });
+
+test("renders custom legend labels", () => {
+  render(<Chart data={[]} />);
+
+  expect(screen.getByText("Current Weight")).toBeInTheDocument();
+  expect(screen.getByText("Target Weight")).toBeInTheDocument();
+});
+
+test("normalizes chart data before rendering", () => {
+  const data = [
+    {
+      date: "2026-04-01",
+      current_weight: "90.50",
+      target_weight: "88.00",
+    },
+  ];
+
+  render(<Chart data={data} />);
+
+  const chart = screen.getByTestId("line-chart");
+  const passedData = JSON.parse(chart.getAttribute("data-chart"));
+
+  expect(passedData).toEqual([
+    {
+      date: "2026-04-01",
+      current_weight: 90.5,
+      target_weight: 88,
+    },
+  ]);
+});
+
+test("handles empty data", () => {
+  render(<Chart data={[]} />);
+
+  const chart = screen.getByTestId("line-chart");
+  const passedData = JSON.parse(chart.getAttribute("data-chart"));
+
+  expect(passedData).toEqual([]);
+});
