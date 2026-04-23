@@ -11,6 +11,7 @@ import Dashboard from "./pages/Home/Dashboard";
 import MealLog from "./pages/nutrition/MealLog";
 import CreateFood from "./pages/nutrition/CreateFood";
 import AddFood from "./pages/nutrition/AddFood";
+import ProfilePage from "./pages/profile/ProfilePage";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/" render={() => <Dashboard />} />
           <Route exact path="/signin" render={() => <SignInForm />} />
           <Route exact path="/signup" render={() => <SignUpForm />} />
+          <Route exact path="/profiles" render={() => <ProfilePage />} />
           <Route exact path="/bodyweight" render={() => <BodyWeight />} />
           <Route exact path="/currentbodyweight" render={() => <CurrentBodyWeight />} />
           <Route exact path="/meallog" render={() => <MealLog />} />

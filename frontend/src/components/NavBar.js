@@ -29,8 +29,7 @@ const NavBar = () => {
       history.push("/signin");
     } catch (err) {
       console.log(err);
-    }
-    console.log(document.cookie);
+    };
   };
 
   const loggedInIcons = (
