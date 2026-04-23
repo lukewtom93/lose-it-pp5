@@ -13,7 +13,7 @@ class ProfileList(generics.ListAPIView):
     serializer_class = ProfileSerializer
 
 
-class ProfileDetail(generics.RetrieveUpdateAPIView):
+class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     Retrieve or update a profile if you're the owner.
     """

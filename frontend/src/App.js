@@ -24,7 +24,7 @@ function App() {
           <Route exact path="/" render={() => <Dashboard />} />
           <Route exact path="/signin" render={() => <SignInForm />} />
           <Route exact path="/signup" render={() => <SignUpForm />} />
-          <Route exact path="/profiles/:pk" render={() => <ProfilePage />} />
+          <Route exact path="/profiles/:id" render={() => <ProfilePage />} />
           <Route exact path="/bodyweight" render={() => <BodyWeight />} />
           <Route exact path="/currentbodyweight" render={() => <CurrentBodyWeight />} />
           <Route exact path="/meallog" render={() => <MealLog />} />
