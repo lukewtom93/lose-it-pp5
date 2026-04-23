@@ -1,5 +1,14 @@
 import { useEffect, useState } from "react";
-import { Card, Container, Dropdown, Form, Row, Col, Alert, Button } from "react-bootstrap";
+import {
+  Card,
+  Container,
+  Dropdown,
+  Form,
+  Row,
+  Col,
+  Alert,
+  Button,
+} from "react-bootstrap";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -57,7 +66,10 @@ function BodyWeight() {
 
       if (bodyWeightId) {
         // update existing body weight record
-        const response = await axiosReq.put(`/body_weight/${bodyWeightId}/`, payload);
+        const response = await axiosReq.put(
+          `/body_weight/${bodyWeightId}/`,
+          payload,
+        );
         data = response.data;
         setSuccess("Body weight updated successfully.");
       } else {
@@ -128,7 +140,9 @@ function BodyWeight() {
           <Card className="p-3">
             <Card.Body>
               <h2 className="mb-3">
-                {bodyWeightId ? "Edit Body Weight Goals" : "Set Body Weight Goals"}
+                {bodyWeightId
+                  ? "Edit Body Weight Goals"
+                  : "Set Body Weight Goals"}
               </h2>
 
               {success && <Alert variant="success">{success}</Alert>}
@@ -150,7 +164,10 @@ function BodyWeight() {
                     />
 
                     <Dropdown>
-                      <Dropdown.Toggle variant="outline-secondary">
+                      <Dropdown.Toggle
+                        variant="outline-secondary"
+                        aria-label="Select weight unit"
+                      >
                         {unit}
                       </Dropdown.Toggle>
 

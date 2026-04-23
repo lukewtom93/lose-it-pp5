@@ -129,12 +129,20 @@ function Dashboard() {
             <div className={styles.button}>
               <Nav>
                 <NavLink exact to="/currentbodyweight">
-                  <button type="button" className="btn btn-outline-primary ml-3 mr-3">
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary ml-3 mr-3"
+                    aria-label="Log current body weight"
+                  >
                     Log Weight
                   </button>
                 </NavLink>
                 <NavLink exact to="/meallog">
-                  <button type="button" className="btn btn-outline-primary ml-3 mr-3">
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary ml-3 mr-3"
+                    aria-label="Open meal logging page"
+                  >
                     Log Meals
                   </button>
                 </NavLink>
@@ -143,6 +151,7 @@ function Dashboard() {
                 <button
                   type="button"
                   className="btn btn-outline-primary ml-3 mr-3"
+                  aria-label="Edit body weight goals"
                 >
                   Edit Goals
                 </button>

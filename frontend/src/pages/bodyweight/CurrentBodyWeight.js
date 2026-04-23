@@ -44,11 +44,6 @@ function CurrentBodyWeight() {
     }
   };
 
-
-  if (!currentWeightData) {
-    return <p>Loading...</p>;
-  }
-
   return (
     <Container>
       <Row>

@@ -24,7 +24,7 @@ function MealLog() {
 
   // The date being viewed in the meal log
   const [selectedDate, setSelectedDate] = useState(today);
-  
+
   const location = useLocation();
   // Success/error messages for meal submission.
   const [success, setSuccess] = useState(location.state?.successMessage || "");
@@ -173,6 +173,7 @@ function MealLog() {
                       variant="danger"
                       size="sm"
                       onClick={() => handleDelete(entry.id)}
+                      aria-label={`Delete ${entry.food_name} meal entry`}
                     >
                       Delete
                     </Button>
@@ -194,7 +195,9 @@ function MealLog() {
             <div className="d-flex justify-content-between align-items-center mb-3">
               <h2>Meal Log</h2>
               <NavLink to="/createfood">
-                <Button>Create New Food</Button>
+                <Button aria-label="Create a new food item">
+                  Create New Food
+                </Button>
               </NavLink>
             </div>
             {success && <Alert variant="success">{success}</Alert>}
@@ -259,7 +262,11 @@ function MealLog() {
                 />
               </Form.Group>
 
-              <Button type="submit" disabled={foodsLoading}>
+              <Button
+                type="submit"
+                disabled={foodsLoading}
+                aria-label="Add food to log"
+              >
                 Add to Log
               </Button>
             </Form>
