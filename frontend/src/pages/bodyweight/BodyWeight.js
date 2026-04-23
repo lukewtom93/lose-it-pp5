@@ -61,8 +61,7 @@ function BodyWeight() {
         goal_weight: parseFloat(goal_weight),
         weight_unit: unit,
       };
-          console.log("bodyWeightId:", bodyWeightId);
-    console.log("payload:", payload);
+
       let data;
 
       if (bodyWeightId) {
