@@ -109,7 +109,7 @@ function MealLog() {
   // Handles delete on selected meal entry
   const handleDelete = async (entryId) => {
     try {
-      await axiosReq.delete(`/meal-entry/${entryId}/`);
+      await axiosReq.delete(`/meal-entry/${entryId}`);
       setEntries((prev) => prev.filter((entry) => entry.id !== entryId));
     } catch (error) {
       console.log(error.response?.data || error);
