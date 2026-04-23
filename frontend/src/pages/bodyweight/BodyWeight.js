@@ -57,7 +57,7 @@ function BodyWeight() {
 
       if (bodyWeightId) {
         // update existing body weight record
-        const response = await axiosReq.put(`/body_weight/${bodyWeightId}`, payload);
+        const response = await axiosReq.put(`/body_weight/${bodyWeightId}/`, payload);
         data = response.data;
         setSuccess("Body weight updated successfully.");
       } else {
