@@ -93,9 +93,9 @@ INSTALLED_APPS = [
 ]
 SITE_ID = 1
 
-cloudinary.config(
-    secure=True,
-)
+CLOUDINARY = {
+        'secure': True
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
