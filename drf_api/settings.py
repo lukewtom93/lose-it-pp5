@@ -112,10 +112,12 @@ CORS_ALLOWED_ORIGINS = [
     os.environ.get('CLIENT_ORIGIN')
 ]
 
-CORS_ALLOW_CREDENTIALS = True    #changed from allowed
+CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
-    os.environ.get('CLIENT_ORIGIN'),
+    "http://localhost:3000",
+    "http://localhost:8000",
+    "https://lose-it-pp5-6f72427dece8.herokuapp.com",
 ]
 
 ROOT_URLCONF = 'drf_api.urls'
